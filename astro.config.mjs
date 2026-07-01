@@ -4,7 +4,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://novara.studio',
+  // Ваш публичный адрес. Влияет на canonical, sitemap и абсолютные ссылки.
+  // Если позже подключите свой домен — поменяйте здесь.
+  site: 'https://novarabuild.netlify.app',
   integrations: [sitemap()],
   compressHTML: true,
   server: {

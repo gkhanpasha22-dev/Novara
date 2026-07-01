@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://novara.studio/sitemap-index.xml
+Sitemap: https://novarabuild.netlify.app/sitemap-index.xml

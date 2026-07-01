@@ -100,7 +100,7 @@ Header · Hero · Клиенты · Услуги · Кейсы · Процесс
 
 ## Что заменить перед продакшеном
 
-- `site: 'https://novara.studio'` в `astro.config.mjs` (влияет на canonical и sitemap).
+- `site` в `astro.config.mjs` — сейчас `https://novarabuild.netlify.app`; поменяйте, если подключите свой домен (влияет на canonical и sitemap). Не забудьте и `Sitemap:` в `public/robots.txt`.
 - Реальные тексты, контакты, кейсы, ссылки на соцсети.
 - `PUBLIC_FORM_ENDPOINT` в `.env`.
 - `public/assets/og-image.svg` → растровый `og-image.png` 1200×630 (часть соцсетей не читает SVG-превью).

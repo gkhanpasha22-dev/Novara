@@ -13,6 +13,7 @@ const {
   image = '/assets/og-image.svg',
 } = Astro.props;
 
+const origin = Astro.site?.href ?? 'https://novarabuild.netlify.app/';
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 ---
@@ -72,8 +73,8 @@ const ogImage = new URL(image, Astro.site).href;
       '@type': 'Organization',
       name: 'NOVARA',
       alternateName: 'NOVARA Studio',
-      url: 'https://novara.studio/',
-      logo: 'https://novara.studio/assets/favicon.svg',
+      url: origin,
+      logo: `${origin}assets/favicon.svg`,
       description: 'Студия цифровых продуктов, дизайна и брендинга.',
       email: 'hello@novara.studio',
       foundingDate: '2019',
@@ -84,7 +85,7 @@ const ogImage = new URL(image, Astro.site).href;
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'NOVARA',
-      url: 'https://novara.studio/',
+      url: origin,
       inLanguage: 'ru-RU',
     })} />
   </head>
