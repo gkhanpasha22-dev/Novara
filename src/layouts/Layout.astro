@@ -67,6 +67,18 @@ const ogImage = new URL(image, Astro.site).href;
       })();
     </script>
 
+    <!-- Netlify Identity: ссылки-приглашения/сброса пароля приходят на корень сайта
+         с токеном в hash — перенаправляем их в CMS-админку, которая обрабатывает вход.
+         Обычных посетителей не затрагивает (внешних запросов нет). -->
+    <script is:inline>
+      (function () {
+        var h = window.location.hash;
+        if (h && /\b(invite|recovery|confirmation|email_change)_token=|access_token=/.test(h)) {
+          window.location.replace('/admin/' + h);
+        }
+      })();
+    </script>
+
     <!-- Structured data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
