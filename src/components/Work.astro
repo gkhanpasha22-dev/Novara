@@ -1,0 +1,34 @@
+---
+// Selected work: project cards with CSS-gradient thumbnails.
+const projects = [
+  { cls: 'project__thumb--a', title: 'Aurora Bank — мобильный банк', meta: 'Продукт · Дизайн-система · iOS/Android' },
+  { cls: 'project__thumb--b', title: 'Meridian — B2B-платформа', meta: 'Веб · Аналитика · SaaS' },
+  { cls: 'project__thumb--c', title: 'Fabula — медиа-издание', meta: 'Бренд · Редизайн · Скорость' },
+  { cls: 'project__thumb--d', title: 'Kvant — интернет-магазин', meta: 'E-commerce · Конверсия · SEO' },
+];
+---
+<section class="work section" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <header class="section__head section__head--row reveal" data-reveal>
+      <div>
+        <p class="eyebrow">Кейсы</p>
+        <h2 class="section__title" id="work-title">Избранные проекты</h2>
+      </div>
+      <p class="section__lead">Немного из того, что мы запустили за последние годы.</p>
+    </header>
+
+    <div class="work__grid">
+      {projects.map((p) => (
+        <article class="project reveal" data-reveal>
+          <a class="project__link" href="#contact">
+            <div class={`project__thumb ${p.cls}`} aria-hidden="true"></div>
+            <div class="project__body">
+              <h3 class="project__title">{p.title}</h3>
+              <p class="project__meta">{p.meta}</p>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

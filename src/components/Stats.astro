@@ -1,0 +1,22 @@
+---
+// Stats: animated counters (animation added by the lazy motion module).
+const stats = [
+  { count: 120, suffix: '+', label: 'запущенных проектов' },
+  { count: 98, suffix: '/100', label: 'средний PageSpeed' },
+  { count: 14, suffix: '', label: 'человек в команде' },
+  { count: 6, suffix: ' лет', label: 'на рынке' },
+];
+---
+<section class="stats section" aria-labelledby="stats-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="stats-title">Цифры</h2>
+    <ul class="stats__grid" role="list">
+      {stats.map((s) => (
+        <li class="stat reveal" data-reveal>
+          <span class="stat__value" data-count={s.count} data-suffix={s.suffix}>0</span>
+          <span class="stat__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

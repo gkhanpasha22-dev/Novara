@@ -1,0 +1,28 @@
+---
+// Team: member cards with initial-based avatars.
+const members = [
+  { initials: 'АК', cls: 'member__avatar--1', name: 'Анна Ковалёва', role: 'Креативный директор' },
+  { initials: 'ДС', cls: 'member__avatar--2', name: 'Дмитрий Соколов', role: 'Lead-разработчик' },
+  { initials: 'МЛ', cls: 'member__avatar--3', name: 'Мария Лебедева', role: 'Продуктовый дизайнер' },
+  { initials: 'ИП', cls: 'member__avatar--4', name: 'Игорь Петров', role: 'Стратег роста' },
+];
+---
+<section class="team section" id="team" aria-labelledby="team-title">
+  <div class="container">
+    <header class="section__head reveal" data-reveal>
+      <p class="eyebrow">Команда</p>
+      <h2 class="section__title" id="team-title">Небольшая команда, большой опыт</h2>
+      <p class="section__lead">Мы намеренно остаёмся компактными — так каждый проект получает внимание сеньоров.</p>
+    </header>
+
+    <ul class="team__grid" role="list">
+      {members.map((m) => (
+        <li class="member reveal" data-reveal>
+          <div class={`member__avatar ${m.cls}`} aria-hidden="true">{m.initials}</div>
+          <h3 class="member__name">{m.name}</h3>
+          <p class="member__role">{m.role}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

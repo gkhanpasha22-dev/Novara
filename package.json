@@ -1,0 +1,19 @@
+{
+  "name": "novara",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NOVARA — студия цифровых продуктов. Astro-лендинг с упором на SEO и скорость.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "cms": "npx --yes decap-server",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.6.0",
+    "@astrojs/sitemap": "^3.2.1"
+  }
+}

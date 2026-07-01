@@ -1,0 +1,28 @@
+---
+// Services: four service pillars driven by data.
+const services = [
+  { num: '01', title: 'Продуктовый дизайн', text: 'Исследования, прототипы, UX/UI и дизайн-системы. Проектируем интерфейсы, которые понятны с первого экрана.' },
+  { num: '02', title: 'Веб-разработка', text: 'Быстрые сайты и приложения на современном стеке. Семантическая вёрстка, доступность и SEO из коробки.' },
+  { num: '03', title: 'Брендинг', text: 'Айдентика, гайдлайны и визуальный язык. Собираем узнаваемый бренд, который работает во всех каналах.' },
+  { num: '04', title: 'Рост и аналитика', text: 'SEO, метрики, A/B-тесты и оптимизация конверсии. Превращаем трафик в измеримый результат.' },
+];
+---
+<section class="services section" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <header class="section__head reveal" data-reveal>
+      <p class="eyebrow">Услуги</p>
+      <h2 class="section__title" id="services-title">Полный цикл — от идеи до&nbsp;продакшена</h2>
+      <p class="section__lead">Собираем команду под задачу: стратегия, дизайн, разработка и рост. Работаем спринтами и держим фокус на результате.</p>
+    </header>
+
+    <ul class="cards" role="list">
+      {services.map((s) => (
+        <li class="card reveal" data-reveal>
+          <span class="card__num">{s.num}</span>
+          <h3 class="card__title">{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

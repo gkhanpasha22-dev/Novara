@@ -1,0 +1,12 @@
+---
+// Trust bar: client wordmarks.
+const clients = ['Aurora Bank', 'Meridian', 'Kvant', 'North Retail', 'Fabula', 'Volнa'];
+---
+<section class="clients" aria-label="Нам доверяют">
+  <div class="container">
+    <p class="clients__label">Нам доверяют команды из финтеха, ритейла и медиа</p>
+    <ul class="clients__logos" role="list">
+      {clients.map((name) => <li set:html={name}></li>)}
+    </ul>
+  </div>
+</section>

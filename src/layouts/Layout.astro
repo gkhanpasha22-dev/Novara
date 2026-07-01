@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'NOVARA — студия цифровых продуктов, дизайна и брендинга',
+  description = 'NOVARA — независимая студия цифровых продуктов. Проектируем и разрабатываем сайты, интерфейсы и бренды, которые растут вместе с бизнесом.',
+  image = '/assets/og-image.svg',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0b0f" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="студия цифровых продуктов, веб-разработка, UX/UI дизайн, брендинг, дизайн интерфейсов, разработка сайтов" />
+    <meta name="author" content="NOVARA Studio" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NOVARA" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Icons / manifest -->
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Set theme before paint to avoid FOUC -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'NOVARA',
+      alternateName: 'NOVARA Studio',
+      url: 'https://novara.studio/',
+      logo: 'https://novara.studio/assets/favicon.svg',
+      description: 'Студия цифровых продуктов, дизайна и брендинга.',
+      email: 'hello@novara.studio',
+      foundingDate: '2019',
+      sameAs: ['https://t.me/novara', 'https://dribbble.com/novara', 'https://github.com/novara'],
+      address: { '@type': 'PostalAddress', addressLocality: 'Москва', addressCountry: 'RU' },
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'NOVARA',
+      url: 'https://novara.studio/',
+      inLanguage: 'ru-RU',
+    })} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <slot />
+  </body>
+</html>

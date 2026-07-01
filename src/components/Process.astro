@@ -1,0 +1,28 @@
+---
+// Process: four-step workflow.
+const steps = [
+  { num: '01', title: 'Исследование', text: 'Погружаемся в задачу, изучаем рынок и пользователей, фиксируем цели и метрики успеха.' },
+  { num: '02', title: 'Концепция', text: 'Собираем прототипы и визуальное направление. Проверяем гипотезы до старта разработки.' },
+  { num: '03', title: 'Производство', text: 'Дизайним и пишем код спринтами. Каждую неделю — демо и работающий инкремент.' },
+  { num: '04', title: 'Запуск и рост', text: 'Выкатываем, замеряем, оптимизируем. Поддерживаем и развиваем продукт после релиза.' },
+];
+---
+<section class="process section" id="process" aria-labelledby="process-title">
+  <div class="container">
+    <header class="section__head reveal" data-reveal>
+      <p class="eyebrow">Процесс</p>
+      <h2 class="section__title" id="process-title">Как мы работаем</h2>
+      <p class="section__lead">Прозрачный процесс без сюрпризов: вы видите результат на каждом шаге.</p>
+    </header>
+
+    <ol class="steps" role="list">
+      {steps.map((s) => (
+        <li class="step reveal" data-reveal>
+          <span class="step__num">{s.num}</span>
+          <h3 class="step__title">{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

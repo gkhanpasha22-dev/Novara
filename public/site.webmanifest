@@ -1,0 +1,18 @@
+{
+  "name": "NOVARA — студия цифровых продуктов",
+  "short_name": "NOVARA",
+  "description": "Студия цифровых продуктов, дизайна и брендинга.",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0f",
+  "theme_color": "#0b0b0f",
+  "icons": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

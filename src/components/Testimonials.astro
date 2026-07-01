@@ -1,0 +1,28 @@
+---
+// Testimonials: client quotes.
+const quotes = [
+  { text: '«NOVARA пересобрали наш сайт — скорость выросла вдвое, а заявки на 30%. Работали как часть нашей команды».', name: 'Елена Морозова', role: 'CMO, Aurora Bank' },
+  { text: '«Редкий случай, когда дизайн и разработка говорят на одном языке. Сроки — в точку, качество — выше ожиданий».', name: 'Артём Волков', role: 'CEO, Meridian' },
+  { text: '«Помогли навести порядок в бренде и собрать дизайн-систему. Теперь запускаем страницы в разы быстрее».', name: 'Светлана Гусева', role: 'Head of Product, Fabula' },
+];
+---
+<section class="testimonials section" aria-labelledby="testimonials-title">
+  <div class="container">
+    <header class="section__head reveal" data-reveal>
+      <p class="eyebrow">Отзывы</p>
+      <h2 class="section__title" id="testimonials-title">Что говорят клиенты</h2>
+    </header>
+
+    <div class="testimonials__grid">
+      {quotes.map((q) => (
+        <figure class="quote reveal" data-reveal>
+          <blockquote>{q.text}</blockquote>
+          <figcaption>
+            <span class="quote__name">{q.name}</span>
+            <span class="quote__role">{q.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

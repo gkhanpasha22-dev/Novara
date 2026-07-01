@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+---
+
+<Layout
+  title="Блог NOVARA — о дизайне, разработке и скорости"
+  description="Заметки команды NOVARA о продуктовом дизайне, веб-разработке, производительности и SEO."
+>
+  <Header />
+  <main id="main" class="section">
+    <div class="container">
+      <header class="section__head">
+        <p class="eyebrow">Блог</p>
+        <h1 class="section__title">Пишем о продуктах, дизайне и скорости</h1>
+        <p class="section__lead">Практические заметки команды — о том, как мы проектируем, разрабатываем и ускоряем цифровые продукты.</p>
+      </header>
+
+      <div class="blog__grid">
+        {posts.map((post) => (
+          <article class="post-card">
+            <a class="post-card__link" href={`/blog/${post.id}/`}>
+              <div class={`post-card__cover project__thumb--${post.data.cover}`} aria-hidden="true"></div>
+              <div class="post-card__body">
+                <time class="post-card__date" datetime={post.data.pubDate.toISOString()}>{fmtDate(post.data.pubDate)}</time>
+                <h2 class="post-card__title">{post.data.title}</h2>
+                <p class="post-card__desc">{post.data.description}</p>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

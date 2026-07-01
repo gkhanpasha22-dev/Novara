@@ -1,0 +1,11 @@
+# Netlify — конфигурация сборки и деплоя
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Обработчик формы Netlify не требуется — форма шлёт POST на PUBLIC_FORM_ENDPOINT.
+# Если захотите использовать Netlify Forms, добавьте атрибут data-netlify="true"
+# в тег <form> компонента Contact.astro.

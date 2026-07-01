@@ -1,0 +1,115 @@
+---
+// Contact: CTA + form with real submission.
+// Set PUBLIC_FORM_ENDPOINT in a .env file (e.g. a Formspree URL) to enable
+// real delivery. Without it, the form runs in demo mode (simulated success).
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+<section class="contact section" id="contact" aria-labelledby="contact-title">
+  <div class="container contact__inner">
+    <div class="contact__intro reveal" data-reveal>
+      <p class="eyebrow">Контакты</p>
+      <h2 class="section__title" id="contact-title">Расскажите о&nbsp;задаче</h2>
+      <p class="section__lead">Ответим в течение одного рабочего дня и предложим следующий шаг. Или напишите напрямую:</p>
+      <ul class="contact__links" role="list">
+        <li><a href="mailto:hello@novara.studio">hello@novara.studio</a></li>
+        <li><a href="tel:+74950000000">+7 495 000-00-00</a></li>
+      </ul>
+    </div>
+
+    <form class="contact__form reveal" data-reveal data-contact-form data-endpoint={endpoint} novalidate>
+      <div class="field">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="message">О проекте</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <!-- Honeypot: hidden from users, catches bots -->
+      <div class="hp" aria-hidden="true">
+        <label for="company">Не заполняйте это поле</label>
+        <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+      </div>
+      <button class="btn btn--primary btn--block" type="submit" data-submit>Отправить заявку</button>
+      <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const honeypot = form.querySelector<HTMLInputElement>('#company')!;
+    const endpoint = form.getAttribute('data-endpoint') || '';
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const setStatus = (msg: string, state: 'ok' | 'error' | '') => {
+      status.textContent = msg;
+      if (state) status.dataset.state = state;
+      else status.removeAttribute('data-state');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Bots typically fill the hidden honeypot — pretend success, do nothing.
+      if (honeypot.value) {
+        setStatus('Спасибо! Заявка отправлена.', 'ok');
+        form.reset();
+        return;
+      }
+
+      // Client-side validation
+      const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+        'input:not([tabindex="-1"]), textarea'
+      );
+      let valid = true;
+      fields.forEach((f) => {
+        const invalid = !f.value.trim() || (f.type === 'email' && !emailRe.test(f.value));
+        f.setAttribute('aria-invalid', String(invalid));
+        if (invalid) valid = false;
+      });
+      if (!valid) {
+        setStatus('Проверьте, пожалуйста, поля формы.', 'error');
+        return;
+      }
+
+      // Submitting state
+      submitBtn.disabled = true;
+      const original = submitBtn.textContent;
+      submitBtn.textContent = 'Отправляем…';
+      setStatus('', '');
+
+      try {
+        if (endpoint) {
+          // Real delivery (e.g. Formspree). Expects a 2xx on success.
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          if (!res.ok) throw new Error('Bad response');
+        } else {
+          // Demo mode — no endpoint configured. Simulate a network round-trip.
+          console.info('[NOVARA] PUBLIC_FORM_ENDPOINT не задан — форма работает в демо-режиме.');
+          await new Promise((r) => setTimeout(r, 700));
+        }
+
+        setStatus('Спасибо! Заявка отправлена — ответим в течение рабочего дня.', 'ok');
+        form.reset();
+        form.querySelectorAll('[aria-invalid]').forEach((f) => f.removeAttribute('aria-invalid'));
+      } catch (err) {
+        setStatus('Не удалось отправить. Попробуйте ещё раз или напишите на hello@novara.studio.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = original;
+      }
+    });
+  }
+</script>

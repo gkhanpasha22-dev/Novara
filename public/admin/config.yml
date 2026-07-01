@@ -1,0 +1,54 @@
+# =========================================================
+#  Decap CMS — конфигурация
+#  Продакшен: авторизация через Netlify Identity + Git Gateway.
+#  Локально:  запустите `npm run cms` (или `npx decap-server`) и откройте
+#             http://localhost:4321/admin/ — правки пойдут прямо в файлы.
+# =========================================================
+
+backend:
+  name: git-gateway
+  branch: main # ветка, в которую CMS коммитит правки
+
+# Включает локальный режим редактирования файлов (нужен запущенный decap-server).
+local_backend: true
+
+# Язык интерфейса
+locale: ru
+
+# Куда складывать загруженные изображения
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Блог
+    label_singular: Статья
+    description: Статьи блога NOVARA
+    folder: src/content/blog
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    summary: '{{title}} — {{pubDate}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - { label: Заголовок, name: title, widget: string }
+      - { label: Краткое описание, name: description, widget: text }
+      - {
+          label: Дата публикации,
+          name: pubDate,
+          widget: datetime,
+          format: 'YYYY-MM-DD',
+          date_format: 'YYYY-MM-DD',
+          time_format: false,
+        }
+      - { label: Автор, name: author, widget: string, default: 'NOVARA Studio' }
+      - {
+          label: Обложка (градиент),
+          name: cover,
+          widget: select,
+          options: [a, b, c, d],
+          default: a,
+        }
+      - { label: Черновик, name: draft, widget: boolean, default: false }
+      - { label: Текст статьи, name: body, widget: markdown }

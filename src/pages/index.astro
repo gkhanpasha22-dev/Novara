@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Clients from '../components/Clients.astro';
+import Services from '../components/Services.astro';
+import Work from '../components/Work.astro';
+import Process from '../components/Process.astro';
+import Stats from '../components/Stats.astro';
+import Team from '../components/Team.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Header />
+  <main id="main">
+    <Hero />
+    <Clients />
+    <Services />
+    <Work />
+    <Process />
+    <Stats />
+    <Team />
+    <Testimonials />
+    <FAQ />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // Lazily load the heavier motion module (scroll-reveal + counters).
+  // Code-split into its own chunk; only fetched when the browser is idle
+  // and the user has not requested reduced motion.
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const load = () =>
+      import('../scripts/motion.ts')
+        .then((m) => m.init())
+        .catch(() => {});
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(load, { timeout: 1500 });
+    } else {
+      window.addEventListener('load', () => setTimeout(load, 200), { once: true });
+    }
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
+  }
+</script>

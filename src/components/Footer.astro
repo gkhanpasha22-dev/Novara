@@ -1,0 +1,41 @@
+---
+// Footer: brand, section links, socials, copyright.
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="/" aria-label="NOVARA — на главную">
+        <svg class="brand__mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M16 2 3 9v14l13 7 13-7V9L16 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <path d="M10 21V11l12 10V11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="brand__name">NOVARA</span>
+      </a>
+      <p class="footer__tagline">Студия цифровых продуктов, дизайна и брендинга.</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Навигация в подвале">
+      <h2 class="footer__heading">Разделы</h2>
+      <ul role="list">
+        <li><a href="/#services">Услуги</a></li>
+        <li><a href="/#work">Кейсы</a></li>
+        <li><a href="/blog">Блог</a></li>
+        <li><a href="/#contact">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <nav class="footer__nav" aria-label="Соцсети">
+      <h2 class="footer__heading">Соцсети</h2>
+      <ul role="list">
+        <li><a href="https://t.me/novara" rel="noopener">Telegram</a></li>
+        <li><a href="https://dribbble.com/novara" rel="noopener">Dribbble</a></li>
+        <li><a href="https://github.com/novara" rel="noopener">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container footer__bottom">
+    <p>© {year} NOVARA Studio. Все права защищены.</p>
+    <p>Сделано с вниманием к скорости и деталям.</p>
+  </div>
+</footer>
