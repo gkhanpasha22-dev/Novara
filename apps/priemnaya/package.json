@@ -1,0 +1,15 @@
+{
+  "name": "priemnaya",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Приёмная — единый инбокс заявок для микробизнеса. Прототип: Telegram + форма сайта.",
+  "scripts": {
+    "start": "node --no-warnings src/server.js",
+    "demo": "PRIEMNAYA_DEMO=1 node --no-warnings src/server.js",
+    "reset": "node --no-warnings src/reset.js"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Приёмная — все заявки в одном месте</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <strong>Приёмная</strong>
+        <span class="badge badge--demo" id="demo-badge" hidden>демо</span>
+      </div>
+      <div class="stats" id="stats" aria-live="polite"></div>
+      <button class="btn btn--ghost" id="digest-btn" type="button">Итог дня</button>
+    </header>
+
+    <main class="layout" id="layout">
+      <!-- Список диалогов -->
+      <section class="pane pane--list" aria-label="Обращения">
+        <div class="filters" role="tablist">
+          <button class="chip is-active" data-filter="all" role="tab">Все</button>
+          <button class="chip" data-filter="new" role="tab">Новые</button>
+          <button class="chip" data-filter="open" role="tab">В работе</button>
+          <button class="chip" data-filter="done" role="tab">Готово</button>
+        </div>
+        <input class="search" id="search" type="search" placeholder="Поиск по имени, телефону, тексту" />
+        <ul class="dialogs" id="dialogs"></ul>
+      </section>
+
+      <!-- Переписка -->
+      <section class="pane pane--thread" aria-label="Переписка">
+        <div class="thread__head">
+          <button class="btn btn--ghost btn--back" id="back-btn" type="button" aria-label="Назад к списку">←</button>
+          <div>
+            <h2 id="thread-title">Выберите обращение</h2>
+            <p class="muted" id="thread-sub">Слева список всех входящих из Telegram, сайта и Авито</p>
+          </div>
+        </div>
+
+        <div class="thread" id="thread"></div>
+
+        <form class="composer" id="composer" hidden>
+          <div class="templates" id="templates"></div>
+          <div class="composer__row">
+            <textarea id="reply" rows="2" placeholder="Ответ клиенту… (Ctrl+Enter — отправить)"></textarea>
+            <button class="btn btn--primary" type="submit">Отправить</button>
+          </div>
+          <p class="hint" id="send-hint" hidden></p>
+        </form>
+      </section>
+
+      <!-- Карточка клиента -->
+      <aside class="pane pane--card" id="card" aria-label="Карточка клиента" hidden>
+        <h3>Карточка</h3>
+        <label class="field">
+          <span>Имя</span>
+          <input id="c-name" type="text" />
+        </label>
+        <label class="field">
+          <span>Телефон</span>
+          <input id="c-phone" type="tel" placeholder="+7 ___ ___-__-__" />
+        </label>
+        <label class="field">
+          <span>Статус</span>
+          <select id="c-status">
+            <option value="new">Новый</option>
+            <option value="open">В работе</option>
+            <option value="done">Готово</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Заметка</span>
+          <textarea id="c-note" rows="4" placeholder="Что важно помнить об этом клиенте"></textarea>
+        </label>
+        <p class="saved" id="saved" hidden>Сохранено</p>
+
+        <h3>Напоминания</h3>
+        <div class="reminder-quick">
+          <button class="chip" data-in="60" type="button">через час</button>
+          <button class="chip" data-in="1440" type="button">завтра</button>
+          <button class="chip" data-in="4320" type="button">через 3 дня</button>
+        </div>
+        <ul class="reminders" id="reminders"></ul>
+      </aside>
+    </main>
+
+    <dialog id="digest-dialog">
+      <h3>Итог дня</h3>
+      <pre id="digest-text"></pre>
+      <form method="dialog"><button class="btn btn--primary">Закрыть</button></form>
+    </dialog>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
