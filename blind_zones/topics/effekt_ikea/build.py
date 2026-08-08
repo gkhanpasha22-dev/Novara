@@ -4,25 +4,25 @@
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "base"))
 from make import slide
-from animate import animated_slide
+from animate import animated_slide, write_voiceover_script
 
 D = os.path.dirname(os.path.abspath(__file__)) + os.sep
 
 slide("ЭФФЕКТ IKEA", "Сделанное своими руками ценится в разы больше.",
       D + "cover.png", head_size=60, body_size=42)
 
-animated_slide("Сделал сам? Дороже ценишь",
-                "Люди платят за свою поделку впятеро больше, чем за чужую.",
-                D + "s1.mp4")
+SLIDES = [
+    ("Сделал сам? Дороже ценишь",
+     "Люди платят за свою поделку впятеро больше, чем за чужую."),
+    ("Мастерство роли не играет",
+     "Свою кривую оригами ты оценишь как работу мастера."),
+    ("Эксперимент с оригами, 2012",
+     "Свою поделку оценили в 23 цента, чужую в 5."),
+    ("Дело не в качестве",
+     "Ты ценишь не результат, а вложенный труд."),
+]
 
-animated_slide("Мастерство роли не играет",
-                "Свою кривую оригами ты оценишь как работу мастера.",
-                D + "s2.mp4")
+for i, (headline, body) in enumerate(SLIDES, start=1):
+    animated_slide(headline, body, D + f"s{i}.mp4")
 
-animated_slide("Эксперимент с оригами, 2012",
-                "Свою поделку оценили в 23 цента, чужую в 5.",
-                D + "s3.mp4")
-
-animated_slide("Дело не в качестве",
-                "Ты ценишь не результат, а вложенный труд.",
-                D + "s4.mp4")
+write_voiceover_script(SLIDES, D + "voiceover.txt")
