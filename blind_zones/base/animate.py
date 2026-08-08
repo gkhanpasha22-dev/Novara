@@ -271,3 +271,24 @@ def animated_slide(headline, body, out_mp4, duration=5.0,
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print("saved", out_mp4, f"({total_words} слов в теле, {duration}с)")
+
+
+def write_voiceover_script(slides, out_path):
+    """Сохраняет текст для озвучки нейросетью (ElevenLabs и т.п.).
+
+    slides — список (headline, body) в том же порядке, что и вызовы
+    animated_slide(). Текст СОБИРАЕТСЯ из тех же строк, что уходят
+    на карточки — не набирается заново вручную, поэтому не может
+    разойтись с тем, что реально показано на видео (а значит,
+    синхронизация озвучки со словами на экране не ломается опечаткой).
+    Слайды разделены пустой строкой — это естественные паузы речи
+    на границах карточек.
+    """
+    parts = []
+    for headline, body in slides:
+        h = headline if headline and headline[-1] in ".!?" else headline + "."
+        parts.append(f"{h} {body}".strip())
+    text = "\n\n".join(parts)
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print("saved", out_path)

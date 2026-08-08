@@ -30,7 +30,7 @@ BUILD_TEMPLATE = '''# -*- coding: utf-8 -*-
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "base"))
 from make import slide
-from animate import animated_slide
+from animate import animated_slide, write_voiceover_script
 
 D = os.path.dirname(os.path.abspath(__file__)) + os.sep
 
@@ -39,12 +39,21 @@ D = os.path.dirname(os.path.abspath(__file__)) + os.sep
 slide("ЗАГОЛОВОК ОБЛОЖКИ", "Короткий подзаголовок.", D + "cover.png", head_size=64, body_size=46)
 
 # 4 слайда по структуре: Удар / Разрыв / Механизм-данные / Приземление —
-# теперь видео-сегменты со стилем "постепенное появление слов"
-# (утверждён владельцем как стандарт, а не "смена фраз")
-animated_slide("Удар", "Дерзкое утверждение.", D + "s1.mp4")
-animated_slide("Разрыв", "Где мнение расходится с реальностью.", D + "s2.mp4")
-animated_slide("Механизм", "Конкретный эксперимент и цифры.", D + "s3.mp4")
-animated_slide("Приземление", "Один практический вывод.", D + "s4.mp4")
+# заполняй тексты здесь ОДИН раз, дальше карточки и текст для озвучки
+# генерируются из одного и того же списка (не могут разойтись)
+SLIDES = [
+    ("Удар", "Дерзкое утверждение."),
+    ("Разрыв", "Где мнение расходится с реальностью."),
+    ("Механизм", "Конкретный эксперимент и цифры."),
+    ("Приземление", "Один практический вывод."),
+]
+
+for i, (headline, body) in enumerate(SLIDES, start=1):
+    animated_slide(headline, body, D + f"s{{i}}.mp4")
+
+# Текст для озвучки нейросетью (ElevenLabs и т.п.) — та же последовательность
+# headline+body, что и на карточках, автоматически, без ручного набора
+write_voiceover_script(SLIDES, D + "voiceover.txt")
 '''
 
 REPORT_TEMPLATE = '''# Доклад к посту: {slug}
