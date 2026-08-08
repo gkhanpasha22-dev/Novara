@@ -44,7 +44,27 @@ def wrap(d, text, font, max_w):
     return lines
 
 
+# Бюджет слов на слайд (см. MASTER.md, раздел 2) — расчёт под то, чтобы
+# текст помещался в 3.5с показа как при тихом чтении, так и при будущей
+# озвучке (~2.5-2.8 слова/сек). Заголовок не в счёт бюджета озвучки —
+# это визуальный якорь, считывается мгновенно.
+HEADLINE_WORD_BUDGET = 4
+BODY_WORD_BUDGET = 12
+
+
+def _check_budget(headline, body, out):
+    h_words = len(headline.split())
+    b_words = len(body.replace("\n", " ").split())
+    if h_words > HEADLINE_WORD_BUDGET:
+        print(f"  ! бюджет превышен: заголовок {h_words} слов "
+              f"(лимит {HEADLINE_WORD_BUDGET}) в {out}")
+    if b_words > BODY_WORD_BUDGET:
+        print(f"  ! бюджет превышен: тело {b_words} слов "
+              f"(лимит {BODY_WORD_BUDGET}) в {out}")
+
+
 def slide(headline, body, out, head_size=64, body_size=52):
+    _check_budget(headline, body, out)
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
     f_head = ImageFont.truetype(BOLD, head_size)
