@@ -227,9 +227,16 @@ def animated_slide_phrases(headline, body, out_mp4, duration=3.5,
     print("saved", out_mp4, f"({len(chunks)} фраз, {duration}с)")
 
 
-def animated_slide(headline, body, out_mp4, duration=3.5,
+def animated_slide(headline, body, out_mp4, duration=5.0,
                     head_size=64, body_size=52, hold=0.5):
-    """Собирает mp4 одной карточки с постепенным появлением текста."""
+    """Собирает mp4 одной карточки с постепенным появлением текста.
+
+    duration по умолчанию 5.0с (было 3.5с до 2026-08-08) — увеличено,
+    чтобы озвучке не приходилось сжиматься/ускоряться для попадания
+    в старый тайминг (это давало быструю и монотонную подачу). Если
+    для конкретного поста есть измеренная длительность реальной
+    озвучки этого слайда — передавай её явно вместо дефолта, реальный
+    замер всегда приоритетнее расчётной оценки."""
     _check_budget(headline, body, out_mp4)
     total_words = len(body.replace("\n", " ").split())
     n_frames = int(FPS * duration)
