@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Прототип: карточка с постепенным появлением текста (слово за словом),
-тот же визуальный стиль, что и в make.py (фон/шрифты/цвета/раскладка).
+Анимированные карточки для @blind_zones — тот же визуальный стиль, что
+и в make.py (фон/шрифты/цвета/раскладка), но текст появляется постепенно
+вместо мгновенного показа. Используется для s1-s4 (cover.png остаётся
+статичной картинкой — раздел 8 MASTER.md).
+
+animated_slide() — СТАНДАРТ, утверждённый владельцем 2026-08-08: слова
+тела появляются по одному и остаются (накопление), заголовок и красная
+линия проявляются один раз в начале. Используется в шаблоне new_topic.py.
+
+animated_slide_phrases() — альтернативный стиль "смена фраз" (слова
+группами по 2-3, каждая группа гаснет перед следующей), рассмотрен
+и отклонён владельцем в пользу первого варианта — оставлен в коде
+на случай, если понадобится для отдельной темы.
 
 Рендерит последовательность PNG-кадров во временную папку и склеивает
 их в mp4 через ffmpeg. Раскладка (перенос строк, центрирование) —
@@ -10,7 +21,8 @@
 
 Использование:
     from animate import animated_slide
-    animated_slide("Заголовок", "Короткое тело.", "out.mp4")
+    animated_slide("Заголовок", "Короткое тело.", "s1.mp4")
+    # ... затем bash ../../base/render_animated.sh . склеит s1-s4 в reel.mp4
 """
 import os
 import shutil
@@ -19,7 +31,8 @@ import tempfile
 
 from PIL import Image, ImageDraw, ImageFont
 
-from make import W, H, BG, WHITE, RED, GRAY, BOLD, REG, MARGIN, wrap
+from make import (W, H, BG, WHITE, RED, GRAY, BOLD, REG, MARGIN, wrap,
+                   _check_budget)
 
 FPS = 30
 
@@ -164,6 +177,7 @@ def animated_slide_phrases(headline, body, out_mp4, duration=3.5,
     headline проявляется и остаётся, тело показывает по одному
     словосочетанию за раз — оно гаснет, вместо него появляется
     следующее (без накопления)."""
+    _check_budget(headline, body, out_mp4)
     chunks = _split_chunks(body, chunk_size)
     n_frames = int(FPS * duration)
     head_end = int(FPS * 0.3)
@@ -216,6 +230,7 @@ def animated_slide_phrases(headline, body, out_mp4, duration=3.5,
 def animated_slide(headline, body, out_mp4, duration=3.5,
                     head_size=64, body_size=52, hold=0.5):
     """Собирает mp4 одной карточки с постепенным появлением текста."""
+    _check_budget(headline, body, out_mp4)
     total_words = len(body.replace("\n", " ").split())
     n_frames = int(FPS * duration)
     head_end = int(FPS * 0.3)      # заголовок проявляется 0.3с
